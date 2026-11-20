@@ -24,6 +24,6 @@ window.addEventListener("scroll", () => {
 
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
-  formNote.textContent = "Thanks. Your inquiry is ready to connect to email or a form service.";
+  formNote.textContent = "Thank you for contacting TBD Digital Solutions. We will get back to you within three business days.";
   form.reset();
 });
