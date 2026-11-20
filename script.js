@@ -22,8 +22,32 @@ window.addEventListener("scroll", () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 8);
 });
 
-form?.addEventListener("submit", (event) => {
+form?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  formNote.textContent = "Thank you for contacting TBD Digital Solutions. We will get back to you within three business days.";
-  form.reset();
+
+  const button = form.querySelector("button[type='submit']");
+  button.disabled = true;
+  formNote.textContent = "Sending...";
+
+  try {
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" },
+    });
+
+    if (response.ok) {
+      formNote.textContent =
+        "Thank you for contacting TBD Digital Solutions. We will get back to you within three business days.";
+      form.reset();
+    } else {
+      formNote.textContent =
+        "Something went wrong. Please try again or email us directly.";
+    }
+  } catch (error) {
+    formNote.textContent =
+      "Network error. Please check your connection and try again.";
+  } finally {
+    button.disabled = false;
+  }
 });
